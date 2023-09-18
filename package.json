@@ -1,0 +1,17 @@
+{
+    "name": "igloo",
+    "module": "index.ts",
+    "type": "module",
+    "scripts": {
+        "dev": "bun --watch examples/basic-routing.ts",
+        "test": "bun --watch test lib/index.ts",
+        "loadTest": "artillery quick --count 200 --num 10 http://localhost:3000"
+    },
+    "devDependencies": {
+        "artillery": "^2.0.0-37",
+        "bun-types": "latest"
+    },
+    "peerDependencies": {
+        "typescript": "^5.0.0"
+    }
+}
