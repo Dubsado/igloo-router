@@ -5,18 +5,24 @@ Basic routing example:
 ```javascript
 import { handler, addRoute } from '../lib/'
 
-addRoute('/health', [], (req: Request) => {
-    return new Response('hello')
-})
+const logRequest = (req: Request) => {
+    console.log(req.method + ' - ' + req.url)
+}
 
-addRoute('/random-json/:id', [], (req: Request, params: { id: string }) => {
+const healthHandler = (req: Request) => {
+    return new Response('hello')
+}
+addRoute('/health', [logRequest], healthHandler)
+
+const randomJsonHandler = (req: Request, params: { id: string }) => {
     return new Response(
         JSON.stringify({
             success: true,
             id: params.id,
         })
     )
-})
+}
+addRoute('/random-json/:id', [logRequest], randomJsonHandler)
 /**
  * Spark up this server.
  */
