@@ -3,7 +3,6 @@ import { findRoute } from '../lib/router/findRoute'
 export const handler = async (req: Request) => {
     // URL to parse
     const myURL = new URL(req.url)
-    console.log(myURL.pathname)
 
     const route = findRoute(myURL.pathname)
     if (!route) {
