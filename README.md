@@ -1,4 +1,4 @@
-# Igloo Router
+<img src="docs/igloo-logo-day.png" height="100" />
 
 _This code is not "production ready," btw._
 
