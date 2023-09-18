@@ -1,19 +1,30 @@
-# igloo
+# Igloo Router
 
-Basic routing example:
+_This code is not "production ready," btw._
+
+Create your project folder: `mkdir myProject`
+
+Initialize bun: `bun init`
+
+Install the Igloo-Router: `bun add igloo-router`
+
+Copy this code to get basic routing installed:
 
 ```javascript
-import { handler, addRoute } from '../lib/'
+import { handler, addRoute } from 'igloo-router'
 
+//dummy middleware to log the requests as they come in
 const logRequest = (req: Request) => {
     console.log(req.method + ' - ' + req.url)
 }
 
+//handler that just says 'haaaay!'
 const healthHandler = (req: Request) => {
     return new Response('hello')
 }
 addRoute('/health', [logRequest], healthHandler)
 
+//another handler that takes an ID parametr
 const randomJsonHandler = (req: Request, params: { id: string }) => {
     return new Response(
         JSON.stringify({
@@ -23,9 +34,10 @@ const randomJsonHandler = (req: Request, params: { id: string }) => {
     )
 }
 addRoute('/random-json/:id', [logRequest], randomJsonHandler)
-/**
- * Spark up this server.
- */
+
+//startup the bun server as normal
+//placing the handler into the fetch means all
+//request will now float through the router
 const server = Bun.serve({
     port: 3000,
     fetch: handler,
@@ -33,3 +45,9 @@ const server = Bun.serve({
 
 console.log(`Basic routing examples on http://localhost:${server.port}`)
 ```
+
+# Why
+
+Because the other guys are slow and bulky! Our uncompressed code has 1026 bytes of minified Javascript code.
+
+![Showing Igloo's bundle size](docs/file-size.png)
