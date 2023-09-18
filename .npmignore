@@ -1,0 +1,9 @@
+# .npmignore
+node_modules/
+lib/
+examples/
+tsconfig.json
+bun.lockb
+README.md
+.gitignore
+.prettierrc
