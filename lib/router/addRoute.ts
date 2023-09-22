@@ -6,26 +6,43 @@ export const addRoute = (
     middleware: Handler[],
     handler: Handler
 ): void => {
-    // 1. Start at the root node
     let node: Node = root
-    // 2. Split path into segments
     const segments = path.split('/').filter(Boolean)
 
-    // Loop through each segment of the path
     for (const segment of segments) {
-        // Dynamic route segment
-        if (segment[0] === ':') {
-            // Use existing or create new
-            node = node.dynamicChild ??= createNode()
-            // Store the parameter name without the ":"
-            node.dynamicName = segment.slice(1)
-        } else {
-            // Static route segment (e.g., "users")
-            // Use existing or create new
-            node = node.staticChildren[segment] ??= createNode()
-        }
+        //Process this segment
+        node = handleSegment(node, segment)
     }
-    // 4. Assign the handler to the final node
+    if (node.handler) {
+        throw new Error(`This route has already been defined. Path::${path}`)
+    }
+    //Assign the handler to the final node
     node.handler = handler
     node.middleware = middleware
+}
+
+//Handles a single portion of the segment loop
+function handleSegment(node: Node, segment: string) {
+    //Dynamic route segment (e.g., ":userId")
+    if (segment[0] === ':') {
+        checkDynamicChildExists(node, segment)
+        node.dynamicChild = node = createNode()
+        //Store the parameter name without the ":"
+        node.dynamicName = segment.slice(1)
+    }
+    //Static route segment (e.g., "users")
+    else {
+        //Use existing or create new
+        node = node.staticChildren[segment] ??= createNode()
+    }
+    return node
+}
+
+//If there's already a dynamic child, throw and error with the segment data logged
+function checkDynamicChildExists(node: Node, segment: string) {
+    if (node.dynamicChild) {
+        throw new Error(
+            `Cannot have multiple of the same path. Segment:${segment}`
+        )
+    }
 }
