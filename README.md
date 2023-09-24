@@ -37,7 +37,11 @@ bun run index.ts
 
 ```javascript
 import { handler, router } from 'igloo-router'
-import { logRequest } from './middleware/log-request'
+
+//let's define some middleware
+export const logRequest = (req: Request) => {
+    console.log(req.method + ' - ' + req.url)
+}
 
 router.get('/health', logRequest, (req: Request) => {
     return new Response('hello')
@@ -83,8 +87,12 @@ console.log('Logs: ', new Date().toLocaleString())
 
 ```javascript
 //additional dependency added here for print routes
-import { handler, router, printRoutes, listRoutes } from 'igloo-router'
-import { logRequest } from './middleware/log-request'
+import { handler, router, printRoutes, listRoutes, root } from 'igloo-router'
+
+//let's define some middleware
+export const logRequest = (req: Request) => {
+    console.log(req.method + ' - ' + req.url)
+}
 
 // ...include your routes as we have defined them above
 
