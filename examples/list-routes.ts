@@ -1,5 +1,5 @@
 import { handler, addRoute } from '../lib/'
-import { listRoutes, printRoutes } from '../lib/router/listRoutes'
+import { printRoutes } from '../lib/router/listRoutes'
 import { logRequest } from './middleware/log-request'
 
 const randomHandler = (req: Request, params: { id: string }) => {
