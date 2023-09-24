@@ -1,21 +1,21 @@
 {
-    "name": "igloo-router",
-    "version": "1.0.0",
-    "module": "index.ts",
-    "type": "module",
-    "main": "build/index.js",
-    "scripts": {
-        "dev": "bun --watch examples/basic-routing.ts",
-        "dev:listRoutes": "bun --watch examples/list-routes.ts",
-        "test": "bun --watch test",
-        "loadTest": "artillery quick --count 200 --num 10 http://localhost:3000",
-        "build:lib": "bun build ./lib/index.ts --outdir ./build --minify --target bun --sourcemap=external"
-    },
-    "devDependencies": {
-        "artillery": "^2.0.0-37",
-        "bun-types": "latest"
-    },
-    "peerDependencies": {
-        "typescript": "^5.0.0"
-    }
+  "name": "igloo-router",
+  "version": "1.0.0",
+  "module": "index.ts",
+  "type": "module",
+  "main": "build/index.js",
+  "scripts": {
+    "dev": "bun --watch examples/basic-routing.ts",
+    "dev:listRoutes": "bun --watch examples/list-routes.ts",
+    "test": "bun --watch test",
+    "loadTest": "artillery quick --count 200 --num 10 http://localhost:3000",
+    "build:lib": "bun build ./lib/index.ts --outdir ./build --minify --target bun --sourcemap=external"
+  },
+  "devDependencies": {
+    "artillery": "^2.0.0-37",
+    "bun-types": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
 }
