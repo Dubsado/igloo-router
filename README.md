@@ -1,4 +1,4 @@
-<img src="docs/igloo-logo-day.png" height="100" />
+<img src="https://github.com/Dubsado/igloo-router/blob/main/docs/igloo-logo-day.png" height="100" />
 
 _This code is not "production ready," btw._
 
@@ -50,4 +50,4 @@ console.log(`Basic routing examples on http://localhost:${server.port}`)
 
 Because the other guys are slow and bulky! Our uncompressed code has 1026 bytes of minified Javascript code.
 
-![Showing Igloo's bundle size](docs/file-size.png)
+![docs/file-size.png](https://github.com/Dubsado/igloo-router/raw/main/docs/file-size.png)
