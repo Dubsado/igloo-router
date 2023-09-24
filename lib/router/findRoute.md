@@ -1,27 +1,56 @@
-# findRoute Function Explanation
+# findRoute Function Documentation
 
-The `findRoute` function is designed to search for a handler that can service a given URL path. While doing so, it also captures any dynamic parameters. Here's a detailed breakdown:
+## Overview
 
-## Steps
+The `findRoute` function is a critical component of the routing system, designed to locate a specific route within a given route tree of `Node` objects. It not only returns the handler associated with the route but also gathers any middleware and URL parameters.
 
-1. **Initialize Node and Parameters**
+## Function Signature
 
-    - The function begins at the `root` node and initializes an empty `params` object.
+```typescript
+export const findRoute = (
+  path: string,
+  method: HTTPMethods
+): Return | null
+```
 
-2. **Path Segmentation**
+## Parameters
 
-    - Like `addRoute`, the function splits the URL path into segments.
+-   `path`: A string representing the URL path you want to find within the route tree (e.g., "/api/user/:id").
+-   `method`: An HTTP method (such as `GET`, `POST`, `PUT`, etc.) representing the type of the request.
 
-3. **Tree Traversal**
+## Return Value
 
-    - For each segment, the function checks:
-        - First for a matching static route in `staticChildren`.
-        - If not found, then for a dynamic route in `dynamicChild`.
-    - If neither is found, it exits the loop and returns `null`.
+Returns an object of type `Return` or `null` if the route is not found. The `Return` type contains:
 
-4. **Capture Parameters**
+-   `handler`: The main function to handle the route request.
+-   `middleware`: An array of middleware functions that should be executed before the main handler.
+-   `params`: A `Record` of URL parameters, if any.
 
-    - While traversing, if a dynamic node is reached, the function captures the dynamic segment value and stores it in the `params` object.
+## Example Usage
 
-5. **Return Handler and Parameters**
-    - Finally, if a handler is found, the function returns both the handler and any captured `params`. If not, it returns `null`.
+```typescript
+const result = findRoute('/api/user/1', 'GET')
+
+if (result) {
+    const { handler, middleware, params } = result
+    // ... execute middleware and handler
+}
+```
+
+## Error Handling
+
+If no route is found that matches the provided `path` and `method`, the function returns `null`.
+
+## Internal Functions
+
+### loopSegments
+
+Traverses each segment of the `path`, starting from the root, and attempts to find a corresponding node.
+
+### handleSegment
+
+Invoked for each segment of the path to find the corresponding node based on static or dynamic segments.
+
+## Note
+
+To use this function properly, make sure to import `findRoute` and the required types like `HTTPMethods`, `Handler`, and `Node`. Also, ensure that your route tree (`root`) is appropriately initialized and populated using `addRoute` or similar functions.
