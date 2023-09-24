@@ -3,10 +3,15 @@ import { root, Node } from '../node'
 type Route = {
     method: string
     path: string
+    isDynamic: boolean
 }
 
 //Loop through all of the routes and return them in an array
-export const listRoutes = (node: Node, pathSoFar: string = ''): Route[] => {
+export const listRoutes = (
+    node: Node,
+    pathSoFar: string = '',
+    isDynamic: boolean = false
+): Route[] => {
     let routes: Route[] = []
 
     // Traverse static children
@@ -20,13 +25,17 @@ export const listRoutes = (node: Node, pathSoFar: string = ''): Route[] => {
     if (node.dynamicChild) {
         const dynamicName = node.dynamicChild.dynamicName!
         routes = routes.concat(
-            listRoutes(node.dynamicChild, `${pathSoFar}/:${dynamicName}`)
+            listRoutes(node.dynamicChild, `${pathSoFar}/:${dynamicName}`, true)
         )
     }
     // Add current node's handlers
     const methods = Object.keys(node.handler).sort() as string[]
     routes = routes.concat(
-        methods.map((method) => ({ method, path: pathSoFar || '/' }))
+        methods.map((method) => ({
+            method,
+            path: pathSoFar || '/',
+            isDynamic,
+        }))
     )
 
     return routes
