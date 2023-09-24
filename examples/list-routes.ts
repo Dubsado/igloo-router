@@ -1,6 +1,10 @@
 import { handler, router, root } from '../lib/'
 import { printRoutes, listRoutes } from '../lib/utils/listRoutes'
-import { logRequest } from './middleware/log-request'
+
+//let's define some middleware
+export const logRequest = (req: Request) => {
+    console.log(req.method + ' - ' + req.url)
+}
 
 const randomHandler = (req: Request, params: { id: string }) => {
     return new Response(

@@ -1,5 +1,9 @@
 import { handler, router } from '../lib/'
-import { logRequest } from './middleware/log-request'
+
+//let's define some middleware
+export const logRequest = (req: Request) => {
+    console.log(req.method + ' - ' + req.url)
+}
 
 router.get('/health', logRequest, (req: Request) => {
     return new Response('hello')
