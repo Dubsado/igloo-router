@@ -1,5 +1,4 @@
 import { handler, addRoute } from '../lib/'
-import { printRoutes } from '../lib/router/listRoutes'
 import { logRequest } from './middleware/log-request'
 
 const healthHandler = (req: Request) => {
