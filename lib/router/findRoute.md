@@ -12,7 +12,7 @@ The `findRoute` function is designed to search for a handler that can service a 
 
     - Like `addRoute`, the function splits the URL path into segments.
 
-3. **Trie Traversal**
+3. **Tree Traversal**
 
     - For each segment, the function checks:
         - First for a matching static route in `staticChildren`.
