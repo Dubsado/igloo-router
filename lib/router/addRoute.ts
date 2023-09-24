@@ -1,11 +1,11 @@
 import { Handler, Node, createNode, root } from '../node'
-
 // Function to add a new route
-export const addRoute = (
+export function addRoute(
+    methods: string[],
     path: string,
     middleware: Handler[],
     handler: Handler
-): void => {
+) {
     let node: Node = root
     const segments = path.split('/').filter(Boolean)
 
@@ -13,11 +13,12 @@ export const addRoute = (
         //Process this segment
         node = handleSegment(node, segment)
     }
-    if (node.handler) {
-        throw new Error(`This route has already been defined. Path::${path}`)
-    }
     //Assign the handler to the final node
-    node.handler = handler
+    for (const method of methods) {
+        checkHandlerExists(node, method, path)
+        //@ts-ignore
+        node.handler[method] = handler
+    }
     node.middleware = middleware
 }
 
@@ -44,5 +45,13 @@ function checkDynamicChildExists(node: Node, segment: string) {
         throw new Error(
             `Cannot have multiple of the same path. Segment:${segment}`
         )
+    }
+}
+
+//If there's already a dynamic child, throw and error with the segment data logged
+function checkHandlerExists(node: Node, method: string, path: string) {
+    //@ts-ignore
+    if (node.handler[method]) {
+        throw new Error(`Cannot have multiple of the same path. Path:${path}`)
     }
 }
