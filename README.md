@@ -11,20 +11,14 @@ Install the Igloo-Router: `bun add igloo-router`
 Copy this code to get basic routing installed:
 
 ```javascript
-import { handler, addRoute } from 'igloo-router'
+import { handler, addRoute, printRoutes } from 'igloo-router'
+import { logRequest } from './middleware/log-request'
 
-//dummy middleware to log the requests as they come in
-const logRequest = (req: Request) => {
-    console.log(req.method + ' - ' + req.url)
-}
-
-//handler that just says 'haaaay!'
 const healthHandler = (req: Request) => {
     return new Response('hello')
 }
-addRoute('/health', [logRequest], healthHandler)
+addRoute(['GET'], '/health', [logRequest], healthHandler)
 
-//another handler that takes an ID parametr
 const randomJsonHandler = (req: Request, params: { id: string }) => {
     return new Response(
         JSON.stringify({
@@ -33,21 +27,31 @@ const randomJsonHandler = (req: Request, params: { id: string }) => {
         })
     )
 }
-addRoute('/random-json/:id', [logRequest], randomJsonHandler)
-
-//startup the bun server as normal
-//placing the handler into the fetch means all
-//request will now float through the router
+addRoute(['GET'], '/random-json/:id', [logRequest], randomJsonHandler)
+/**
+ * Spark up this server.
+ */
 const server = Bun.serve({
     port: 3000,
     fetch: handler,
 })
 
-console.log(`Basic routing examples on http://localhost:${server.port}`)
+console.log(`
+d8b        888                 
+Y8P        888           http://localhost:${server.port}      
+           888                 
+888 .d88b. 888 .d88b.  .d88b.  
+888d88P"88b888d88""88bd88""88b 
+888888  888888888  888888  888 
+888Y88b 888888Y88..88PY88..88P 
+888 "Y88888888 "Y88P"  "Y88P"  
+        888                    
+   Y8b d88P                    
+    "Y88P"                     
+`)
+printRoutes()
 ```
 
 # Why
 
-Because the other guys are slow and bulky! Our uncompressed code has 1026 bytes of minified Javascript code.
-
-![docs/file-size.png](https://github.com/Dubsado/igloo-router/raw/main/docs/file-size.png)
+Because the other guys are slow and bulky! Our uncompressed code has 1.92KB of minified Javascript code.
