@@ -15,13 +15,13 @@ mkdir myProject
 cd myProject
 ```
 
-1.  **Initialize Bun**:
+2.  **Initialize Bun**:
 
 ```
 bun init
 ```
 
-1.  **Install the Igloo-Router**:
+3.  **Install the Igloo-Router**:
 
 ```
 bun add igloo-router
