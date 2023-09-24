@@ -37,4 +37,3 @@ Y8P        888           http://localhost:${server.port}
    Y8b d88P                    
     "Y88P"                     
 `)
-printRoutes()
