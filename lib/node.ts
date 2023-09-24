@@ -1,20 +1,25 @@
 export type Handler = string | null | Function
 
+export type HTTPMethods = 'GET' | 'PUT' | 'DELETE' | 'OPTIONS' | 'POST'
+
+export type HandlerMap = {
+    [K in HTTPMethods]: Handler
+}
+
 export interface Node {
-    handler: Handler
     middleware: Handler[]
     staticChildren: Record<string, Node>
-    dynamicChild: Node | null
-    dynamicName: string | null
+    handler: HandlerMap
+    dynamicChild?: Node
+    dynamicName?: string
 }
 
 // Function to create a new node
 export const createNode = (): Node => ({
-    handler: null,
+    //@ts-ignore
+    handler: {},
     middleware: [],
     staticChildren: {},
-    dynamicChild: null,
-    dynamicName: null,
 })
 
 export const root = createNode()
