@@ -1,11 +1,20 @@
-import { Handler, Node, createNode, root } from '../node'
+import { HTTPMethods, Handler, Node, createNode, root } from '../node'
+import { addToRouteCache } from './findRoute'
+
 // Function to add a new route
 export function addRoute(
-    methods: string[],
+    methods: HTTPMethods[],
     path: string,
     middleware: Handler[],
     handler: Handler
 ) {
+    // Check if the route is static. If it is, save it in cached-Routes.
+    if (!path.includes(':')) {
+        for (const method of methods) {
+            addToRouteCache(path, method, { middleware, handler, params: {} })
+        }
+    }
+
     let node: Node = root
     const segments = path.split('/').filter(Boolean)
 
