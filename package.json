@@ -8,12 +8,21 @@
         "dev": "bun --watch examples/basic-routing.ts",
         "dev:listRoutes": "bun --watch examples/list-routes.ts",
         "test": "bun --watch test",
-        "loadTest": "artillery quick --count 200 --num 10 http://localhost:3000",
+        "loadTestServe:igloo": "bun examples/loadTestSamples/igloo.ts",
+        "loadTestServe:bun": "bun examples/loadTestSamples/bun.ts",
+        "loadTestServe:elysia": "bun examples/loadTestSamples/elysia.ts",
+        "loadTestServe:express": "bun examples/loadTestSamples/express.ts",
+        "loadTest:bun": "$(go env GOPATH)/bin/bombardier http://localhost:3000/",
+        "loadTest:elysia": "$(go env GOPATH)/bin/bombardier http://localhost:8080/id/12345",
+        "loadTest:express": "$(go env GOPATH)/bin/bombardier http://localhost:8000/api/items/12345",
+        "loadTest:igloo:static": "$(go env GOPATH)/bin/bombardier http://localhost:3000/sample",
+        "loadTest:igloo:dynamic": "$(go env GOPATH)/bin/bombardier http://localhost:3000/json/12345",
         "build:lib": "bun build ./lib/index.ts --outdir ./build --minify --target bun --sourcemap=external"
     },
     "devDependencies": {
-        "artillery": "^2.0.0-37",
-        "bun-types": "latest"
+        "bun-types": "latest",
+        "elysia": "^0.7.15",
+        "express": "^4.18.2"
     },
     "peerDependencies": {
         "typescript": "^5.0.0"
